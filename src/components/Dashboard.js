@@ -22,7 +22,7 @@ const Dashboard = () => {
     <div>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Jaaa</h2>
+          <h2 className="text-center mb-4">Dashboard</h2>
           {error ?? <Alert variant="danger">{error}</Alert>}
         </Card.Body>
       </Card>
