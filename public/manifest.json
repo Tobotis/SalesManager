@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Finanzkomitee",
+  "name": "Verwaltungssoftware für das Finanzkomitee",
   "icons": [
     {
       "src": "favicon.ico",
