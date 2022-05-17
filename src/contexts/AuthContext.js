@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
   function signinPW(password){
     return signInWithEmailAndPassword(auth, PWLOGIN, password);
   }
+  
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);

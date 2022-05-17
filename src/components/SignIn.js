@@ -3,7 +3,7 @@ import { Card, Form, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const SignIn = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const pwRef = useRef();
@@ -49,7 +49,7 @@ const Login = () => {
               weiter
             </Button>
           </Form>
-          <h2 className="text-center m-4">oder</h2>
+          <h2 className="text-center m-5">oder</h2>
           <Form className="mb-10" onSubmit={handleSubmit}>
             <Form.Group className="mb-3" id="email">
               <Form.Label>email</Form.Label>
@@ -72,4 +72,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn;
