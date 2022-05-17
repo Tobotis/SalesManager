@@ -5,6 +5,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+
+
+export const PWLOGIN="user@tobotis.com";
 const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -21,6 +24,9 @@ export const AuthProvider = ({ children }) => {
   function signout() {
     return signOut(auth);
   }
+  function signinPW(password){
+    return signInWithEmailAndPassword(auth, PWLOGIN, password);
+  }
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -33,6 +39,7 @@ export const AuthProvider = ({ children }) => {
     signup,
     signin,
     signout,
+    signinPW,
   };
   return (
     <AuthContext.Provider value={value}>

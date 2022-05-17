@@ -6,10 +6,23 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { signin } = useAuth();
+  const pwRef = useRef();
+  const { signin, signinPW } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const handlePWLogin = async (e) => {
+    e.preventDefault();
+    try {
+      setError("");
+      setLoading(true);
+      await signinPW(pwRef.current.value);
+      navigate("/");
+    } catch {
+      setError("irgendetwas ist schief gelaufen");
+    }
+    setLoading(false);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,8 +39,17 @@ const Login = () => {
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">anmelden</h2>
           {error && <Alert variant="danger">{error}</Alert>}
+          <Form className="mb-10" onSubmit={handlePWLogin}>
+            <Form.Group className="mb-3" id="pw">
+              <Form.Label>nur mit passwort anmelden</Form.Label>
+              <Form.Control type="password" ref={pwRef} required />
+            </Form.Group>
+            <Button disabled={loading} className="w-100" type="submit">
+              weiter
+            </Button>
+          </Form>
+          <h2 className="text-center m-4">oder</h2>
           <Form className="mb-10" onSubmit={handleSubmit}>
             <Form.Group className="mb-3" id="email">
               <Form.Label>email</Form.Label>

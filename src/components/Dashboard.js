@@ -2,6 +2,7 @@ import { Button, Alert, Card } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Layout from "./Layout";
 
 const Dashboard = () => {
   const { signout, currentUser } = useAuth();
@@ -19,7 +20,7 @@ const Dashboard = () => {
     setLoading(false);
   };
   return (
-    <div>
+    <Layout>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Dashboard</h2>
@@ -29,7 +30,7 @@ const Dashboard = () => {
       <Button className="w-100" onClick={handleClick} disabled={loading}>
         Abmelden
       </Button>
-    </div>
+    </Layout>
   );
 };
 
