@@ -1,6 +1,7 @@
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, ButtonGroup } from "react-bootstrap";
 import EnterSale from "./EnterSale";
 import { useState } from "react";
+import { deleteSale } from "../firestore";
 
 const Sale = ({ sale }) => {
   const [showEnterSale, setShowEnterSale] = useState(false);
@@ -28,8 +29,15 @@ const Sale = ({ sale }) => {
                 person + (index != sale.people.length - 1 ? ", " : "")
             )}
           </Card.Text>
-          <Button onClick={() => setShowEnterSale(true)}>beitreten</Button>
         </Card.Body>
+        <Card.Footer className="text-muted">
+          <ButtonGroup aria-label="Basic example">
+            <Button onClick={() => setShowEnterSale(true)}>beitreten</Button>
+            <Button variant="danger" onClick={() => deleteSale(sale.id)}>
+              löschen
+            </Button>
+          </ButtonGroup>
+        </Card.Footer>
       </Card>
       <EnterSale
         show={showEnterSale}

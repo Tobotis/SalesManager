@@ -1,4 +1,4 @@
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { firestore } from "./firebase";
 
 export const isValidSale = ({ sale }) => {
@@ -23,4 +23,9 @@ export const enterSale = async ({ sale, name }) => {
   const docRef = doc(firestore, "sales", sale.id);
   const payload = { ...sale, people: [...sale.people, name] };
   await setDoc(docRef, payload);
+};
+
+export const deleteSale = async (id) => {
+  const docRef = doc(firestore, "sales", id);
+  await deleteDoc(docRef);
 };
