@@ -11,14 +11,14 @@ function App() {
       className="d-flex align-items-center justify-content-center"
       style={{ minHeight: "100vh" }}
     >
-      <div className="w-100" style={{ maxWidth: "400" }}>
+      <div className="w-100" style={{ maxWidth: "400px" }}>
         <Router>
           <AuthProvider>
             <Routes>
               <Route exact path="/" element={<PrivateRoute />}>
                 <Route exact path="/" element={<Dashboard />} />
               </Route>
-              <Route path="/signup" element={<Signup />} />
+              {/*<Route path="/signup" element={<Signup />} />*/}
               <Route path="/signin" element={<SignIn />} />
             </Routes>
           </AuthProvider>

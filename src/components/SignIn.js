@@ -42,14 +42,15 @@ const SignIn = () => {
           {error && <Alert variant="danger">{error}</Alert>}
           <Form className="mb-10" onSubmit={handlePWLogin}>
             <Form.Group className="mb-3" id="pw">
-              <Form.Label>nur mit passwort anmelden</Form.Label>
+              <Form.Label>passwort</Form.Label>
               <Form.Control type="password" ref={pwRef} required />
             </Form.Group>
             <Button disabled={loading} className="w-100" type="submit">
               weiter
             </Button>
           </Form>
-          <h2 className="text-center m-5">oder</h2>
+        </Card.Body>
+        {/** <h2 className="text-center m-5">oder</h2>
           <Form className="mb-10" onSubmit={handleSubmit}>
             <Form.Group className="mb-3" id="email">
               <Form.Label>email</Form.Label>
@@ -63,11 +64,11 @@ const SignIn = () => {
               anmelden
             </Button>
           </Form>
-        </Card.Body>
+        </Card.Body>*/}
       </Card>
-      <div className="w-100 text-center mt-2">
+      {/*<div className="w-100 text-center mt-2">
         hast du noch keinen account? <Link to="/signup">registrieren</Link>
-      </div>
+      </div>*/}
     </>
   );
 };
