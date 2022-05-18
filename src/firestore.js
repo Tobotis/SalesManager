@@ -25,6 +25,13 @@ export const enterSale = async ({ sale, name }) => {
   await setDoc(docRef, payload);
 };
 
+export const editSale = async ({sale, id}) => {
+  console.log(sale);
+  const docRef = doc(firestore, "sales", id);
+  const payload = sale;
+  await setDoc(docRef, payload);
+};
+
 export const deleteSale = async (id) => {
   const docRef = doc(firestore, "sales", id);
   await deleteDoc(docRef);
