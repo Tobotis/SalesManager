@@ -2,9 +2,11 @@ import { Card, Button, ButtonGroup } from "react-bootstrap";
 import EnterSale from "./EnterSale";
 import { useState } from "react";
 import { deleteSale } from "../firestore";
+import EditSale from "./EditSale";
 
 const Sale = ({ sale }) => {
   const [showEnterSale, setShowEnterSale] = useState(false);
+  const [showEditSale, setShowEditSale] = useState(false);
   return (
     <>
       <Card>
@@ -33,6 +35,7 @@ const Sale = ({ sale }) => {
         <Card.Footer className="text-muted">
           <ButtonGroup aria-label="Basic example">
             <Button onClick={() => setShowEnterSale(true)}>beitreten</Button>
+            <Button onClick={() => setShowEditSale(true)}>bearbeiten</Button>
             <Button variant="danger" onClick={() => deleteSale(sale.id)}>
               löschen
             </Button>
@@ -42,6 +45,11 @@ const Sale = ({ sale }) => {
       <EnterSale
         show={showEnterSale}
         onHide={() => setShowEnterSale(false)}
+        sale={sale}
+      />
+      <EditSale
+        show={showEditSale}
+        onHide={() => setShowEditSale(false)}
         sale={sale}
       />
     </>

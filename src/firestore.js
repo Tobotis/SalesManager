@@ -6,7 +6,6 @@ export const isValidSale = ({ sale }) => {
 };
 
 export const addSale = async (sale) => {
-  console.log(sale);
   const payload = {
     date: sale.date,
     slot: sale.slot,
@@ -22,6 +21,12 @@ export const addSale = async (sale) => {
 export const enterSale = async ({ sale, name }) => {
   const docRef = doc(firestore, "sales", sale.id);
   const payload = { ...sale, people: [...sale.people, name] };
+  await setDoc(docRef, payload);
+};
+
+export const editSale = async ({ sale, id }) => {
+  const docRef = doc(firestore, "sales", id);
+  const payload = sale;
   await setDoc(docRef, payload);
 };
 

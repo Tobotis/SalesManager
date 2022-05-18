@@ -11,11 +11,19 @@ const EnterSale = ({ show, onHide, sale }) => {
   const handleEnterSale = async (e) => {
     e.preventDefault();
     setError("");
+    if (sale.people.includes(nameRef.current.value)) {
+      setError("person ist bereits eingetragen");
+      return;
+    }
     setLoading(true);
-    await enterSale({
-      name: nameRef.current.value,
-      sale: sale,
-    });
+    try {
+      await enterSale({
+        name: nameRef.current.value,
+        sale: sale,
+      });
+    } catch {
+      setError("irgendetwas ist schief gelaufen");
+    }
     onHide();
 
     setLoading(false);
