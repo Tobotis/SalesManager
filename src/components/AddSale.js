@@ -47,7 +47,7 @@ const AddSale = ({ show, onHide }) => {
         <Form onSubmit={handleAddSale}>
           <Form.Group className="mb-3" id="date">
             <Form.Label>datum</Form.Label>
-            <Form.Control type="date" ref={dateRef} required />
+            <Form.Control type="date" ref={dateRef} required defaultValue={new Date().toISOString().substring(0, 10)} />
           </Form.Group>
           <Form.Group className="mb-3" id="slot">
             <Form.Label>pause</Form.Label>
