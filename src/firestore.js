@@ -6,7 +6,6 @@ export const isValidSale = ({ sale }) => {
 };
 
 export const addSale = async (sale) => {
-  console.log(sale);
   const payload = {
     date: sale.date,
     slot: sale.slot,
