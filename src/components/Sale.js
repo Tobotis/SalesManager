@@ -44,10 +44,10 @@ const Sale = ({ sale }) => {
         </Card.Body>
         <Card.Footer className="text-muted">
           <ButtonGroup aria-label="Basic example">
-            <Button onClick={() => setShowEnterSale(true)}>beitreten</Button>
-            <Button onClick={() => setShowEditSale(true)}>bearbeiten</Button>
-            <Button onClick={() => setShowRevenueEditSale(true)}>umsatz</Button>
-            <Button variant="danger" onClick={() => deleteSale(sale.id)}>
+            <Button size="sm" onClick={() => setShowEnterSale(true)}>beitreten</Button>
+            <Button size="sm" onClick={() => setShowEditSale(true)}>bearbeiten</Button>
+            <Button size="sm" variant={sale?.revenue ? "outline-secondary" : "primary"} onClick={() => setShowRevenueEditSale(true)}> <a style={sale?.revenue ? { color: "green" } : {}}> {(sale?.revenue ? "+" : "") + (sale?.revenue ? Intl.NumberFormat("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(sale.revenue) + " €" : "umsatz")} </a></Button>
+            <Button size="sm" variant="danger" onClick={() => deleteSale(sale.id)}>
               löschen
             </Button>
           </ButtonGroup>

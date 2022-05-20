@@ -44,7 +44,7 @@ const HandleRevenue = ({ show, onHide, sale }) => {
             }}
         >
             <Modal.Header closeButton>
-                <Modal.Title>{(sale.revenue === undefined || sale.revenue) ? "umsatz eintragen" : "umsatz verändern"}</Modal.Title>
+                <Modal.Title>{sale?.revenue ? "umsatz verändern" : "umsatz eintragen"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {error && <Alert variant="danger">{error}</Alert>}
