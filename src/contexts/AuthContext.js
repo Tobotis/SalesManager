@@ -8,6 +8,10 @@ import {
 
 
 export const PWLOGIN="user@tobotis.com";
+export const ADMINPWLOGIN = "admin.finanzkomitee@tobotis.com";
+
+
+
 const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -27,7 +31,14 @@ export const AuthProvider = ({ children }) => {
   function signinPW(password){
     return signInWithEmailAndPassword(auth, PWLOGIN, password);
   }
+  function signinADMINPW(password){
+    return signInWithEmailAndPassword(auth, ADMINPWLOGIN, password);
+  }
   
+  const isAdmin = () => {
+    return currentUser.email === ADMINPWLOGIN;
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -41,6 +52,8 @@ export const AuthProvider = ({ children }) => {
     signin,
     signout,
     signinPW,
+    signinADMINPW,
+    isAdmin
   };
   return (
     <AuthContext.Provider value={value}>

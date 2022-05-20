@@ -4,22 +4,21 @@ import { useState } from "react";
 import { deleteSale } from "../firestore";
 import EditSale from "./EditSale";
 import HandleRevenue from "./HandleRevenue";
+import { useAuth } from "../contexts/AuthContext";
 
 const Sale = ({ sale }) => {
   const [showEnterSale, setShowEnterSale] = useState(false);
   const [showEditSale, setShowEditSale] = useState(false);
   const [showRevenueEditSale, setShowRevenueEditSale] = useState(false);
+  const { isAdmin } = useAuth();
 
-
-  let today_microseconds = new Date().getTime()
-  let sale_microseconds = (sale.date.seconds - (24 * 3600)) * 1000
-  let in_the_past = today_microseconds > sale_microseconds
-
-
+  let today_microseconds = new Date().getTime();
+  let sale_microseconds = (sale.date.seconds - 24 * 3600) * 1000;
+  let in_the_past = today_microseconds > sale_microseconds;
 
   return (
     <>
-      <Card className="mb-2" border={((in_the_past) ? "info" : "secondary")}>
+      <Card className="mb-2" border={in_the_past ? "info" : "secondary"}>
         <Card.Body>
           <Card.Title>
             {sale.product} (
@@ -38,18 +37,49 @@ const Sale = ({ sale }) => {
             {sale.people.length}/{sale.capacity} <br />
             {sale.people.map(
               (person, index) =>
-                person.replace(" ", "") + (index === sale.people.length - 2 ? " & " : (index != sale.people.length - 1 ? ", " : " "))
+                person.replace(" ", "") +
+                (index === sale.people.length - 2
+                  ? " & "
+                  : index != sale.people.length - 1
+                  ? ", "
+                  : " ")
             )}
           </Card.Text>
         </Card.Body>
         <Card.Footer className="text-muted">
           <ButtonGroup aria-label="Basic example">
-            <Button size="sm" onClick={() => setShowEnterSale(true)}>beitreten</Button>
-            <Button size="sm" onClick={() => setShowEditSale(true)}>bearbeiten</Button>
-            <Button size="sm" variant={sale?.revenue ? "outline-secondary" : "primary"} onClick={() => setShowRevenueEditSale(true)}> <a style={sale?.revenue ? { color: "green" } : {}}> {(sale?.revenue ? "+" : "") + (sale?.revenue ? Intl.NumberFormat("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(sale.revenue) + " €" : "umsatz")} </a></Button>
-            <Button size="sm" variant="danger" onClick={() => deleteSale(sale.id)}>
-              löschen
+            <Button size="sm" onClick={() => setShowEnterSale(true)}>
+              beitreten
             </Button>
+            <Button size="sm" onClick={() => setShowEditSale(true)}>
+              bearbeiten
+            </Button>
+            <Button
+              size="sm"
+              variant={sale?.revenue ? "outline-secondary" : "primary"}
+              onClick={() => setShowRevenueEditSale(true)}
+            >
+              {" "}
+              <a style={sale?.revenue ? { color: "green" } : {}}>
+                {" "}
+                {(sale?.revenue ? "+" : "") +
+                  (sale?.revenue
+                    ? Intl.NumberFormat("de-DE", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(sale.revenue) + " €"
+                    : "umsatz")}{" "}
+              </a>
+            </Button>
+            {isAdmin() ? (
+              <Button
+                size="sm"
+                variant="danger"
+                onClick={() => deleteSale(sale.id)}
+              >
+                löschen
+              </Button>
+            ) : null}
           </ButtonGroup>
         </Card.Footer>
       </Card>
@@ -66,7 +96,8 @@ const Sale = ({ sale }) => {
       <HandleRevenue
         show={showRevenueEditSale}
         onHide={() => setShowRevenueEditSale(false)}
-        sale={sale} />
+        sale={sale}
+      />
     </>
   );
 };

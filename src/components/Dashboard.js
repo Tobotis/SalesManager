@@ -2,6 +2,7 @@ import { Button } from "react-bootstrap";
 import { firestore } from "../firebase";
 import { useEffect, useState } from "react";
 import { onSnapshot, collection } from "firebase/firestore";
+import { useAuth } from "../contexts/AuthContext";
 import Layout from "./Layout";
 import Sale from "./Sale";
 import AddSale from "./AddSale";
@@ -10,7 +11,7 @@ import { isValidSale } from "../firestore";
 const Dashboard = () => {
   const [sales, setSales] = useState([]);
   const [showAddSale, setShowAddSale] = useState(false);
-
+  const { isAdmin } = useAuth();
   useEffect(
     () =>
       onSnapshot(collection(firestore, "sales"), (snapshot) => {
@@ -21,9 +22,11 @@ const Dashboard = () => {
   return (
     <Layout>
       <div className="text-center mt-5">
-        <Button onClick={() => setShowAddSale(true)} className="m-5">
-          verkaufstermin hinzufügen
-        </Button>
+        {isAdmin() ? (
+          <Button onClick={() => setShowAddSale(true)} className="m-5">
+            verkaufstermin hinzufügen
+          </Button>
+        ) : null}
         <div className="scrollbar scrollbar-primary">
           {sales.map((sale) =>
             isValidSale({ sale }) ? <Sale sale={sale} key={sale.id} /> : null
