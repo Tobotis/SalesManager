@@ -13,7 +13,7 @@ const Sale = ({ sale }) => {
 
   let today_microseconds = new Date().getTime()
   let sale_microseconds = (sale.date.seconds - (24 * 3600)) * 1000
-  let in_the_past = new Date().getTime() > (sale.date.seconds - (24 * 3600)) * 1000
+  let in_the_past = today_microseconds > sale_microseconds
 
 
 
