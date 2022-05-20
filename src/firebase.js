@@ -2,6 +2,7 @@ import * as firebase from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+// firebase configuration
 const app = firebase.initializeApp({
   apiKey: "AIzaSyAPsdSU85dH3wnAHpWB719kMHE7_w2f-JI",
   authDomain: "finanz-komitee.firebaseapp.com",
@@ -12,6 +13,7 @@ const app = firebase.initializeApp({
   measurementId: "G-EEH7GPCR18",
 });
 
+// export of auth functionality
 export const auth = getAuth(app);
 export const firestore = getFirestore();
 export default app;
