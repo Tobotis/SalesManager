@@ -12,13 +12,18 @@ const Sale = ({ sale }) => {
   const [showRevenueEditSale, setShowRevenueEditSale] = useState(false);
   const { isAdmin } = useAuth();
 
+  // Gets current time (in µs since epoch)
   let today_microseconds = new Date().getTime();
-  let sale_microseconds = (sale.date.seconds - 24 * 3600) * 1000;
+  // Gets time of sale (in µs since epoch)
+  // Is moved by one day to simplify display
+  let sale_microseconds = (sale.date.seconds + 24 * 3600) * 1000;
+  // Calculates if sale is in the past
   let in_the_past = today_microseconds > sale_microseconds;
 
   return (
     <>
-      <Card className="mb-2" border={in_the_past ? "info" : "secondary"}>
+      {/*Change border color regarding ti relationship to present*/}
+      <Card className="mb-2" border={in_the_past ? "secondary" : "info"}>
         <Card.Body>
           <Card.Title>
             {sale.product} (
