@@ -38,8 +38,7 @@ const DashboardSettings = ({ setFilters }) => {
   return (
     <>
       <Accordion>
-        <Accordion.Header>
-          filter</Accordion.Header>
+        <Accordion.Header>filter</Accordion.Header>
         <Accordion.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="filter">
@@ -59,7 +58,7 @@ const DashboardSettings = ({ setFilters }) => {
                 onChange={(e) => { setShowFuture(e.target.checked); }}
               />
             </Form.Group>
-            <Form.Group controlId="sorting">
+            <Form.Group controlId="sorting" className="mt-1">
               <Form.Text>sortieren nach</Form.Text>
               <Form.Select aria-label="Sortierung" ref={sortByRef} onChange={(e) => { handleSubmit(); }}>
                 <option value={"sort_by_entry_date"}>Eintragsdatum</option>
@@ -72,6 +71,7 @@ const DashboardSettings = ({ setFilters }) => {
               <FormCheck
                 defaultChecked={true}
                 type="switch"
+                className="my-1"
                 id="order_of_sort"
                 label="aufsteigend sortieren"
                 onChange={(e) => { setOrderOfSort(e.target.checked); }}
@@ -79,7 +79,7 @@ const DashboardSettings = ({ setFilters }) => {
             </Form.Group>
             {/*<Button
               disabled={loading}
-              className="w-100"
+              className="w-100 mt-2"
               variant="primary"
               type="submit"
             >
