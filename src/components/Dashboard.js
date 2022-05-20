@@ -9,6 +9,7 @@ import AddSale from "./AddSale";
 import { isValidSale } from "../firestore";
 import DashboardSettings from "./DashboardSettings";
 import { inThePast, inTheFuture } from "../utils/dateFunctions";
+import { type } from "@testing-library/user-event/dist/type";
 
 const Dashboard = () => {
   const [sales, setSales] = useState([]);
@@ -43,11 +44,11 @@ const Dashboard = () => {
     let copy = sales;
 
     if (appliedFilters.includes("sort_by_date")) {
-      copy.sort((a, b) => a.date < b.date)
+      copy.sort((a, b) => a.date - b.date)
     }
 
     if (appliedFilters.includes("sort_by_required_people")) {
-      copy.sort((a, b) => a.capacity - a.people.length < b.capacity - b.people.length)
+      copy.sort((a, b) => (a.capacity - a.people.length) - (b.capacity - b.people.length))
     }
 
     if (appliedFilters.includes("sort_by_entry_date")) {
@@ -55,7 +56,12 @@ const Dashboard = () => {
     }
 
     if (appliedFilters.includes("sort_by_revenue")) {
-      copy.sort((a, b) => a.revenue < b.revenue)
+      copy.sort((a, b) => {
+        if (typeof (a.revenue) != "number") return -1;
+        if (typeof (b.revenue) != "number") return 1;
+        return a.revenue - b.revenue;
+
+      })
     }
 
     if (!appliedFilters.includes("invert")) {
@@ -74,7 +80,9 @@ const Dashboard = () => {
     if (appliedFilters.includes("filter_free")) {
       copy = copy.filter((a) => a.capacity = !a.people.length)
     }
-
+    console.log("--------------")
+    copy.map((i) => { console.log(i.revenue) })
+    console.log("--------------")
     setProcessedSales(copy);
 
   }

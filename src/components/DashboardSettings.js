@@ -7,9 +7,9 @@ const DashboardSettings = ({ setFilters }) => {
 
   const [showPast, setShowPast] = useState(true)
   const [showFuture, setShowFuture] = useState(true)
-  const [orderOfSort, setOrderOfSort] = useState(true)
+  const [increasing, setIncreasing] = useState(true)
 
-  useEffect(() => { handleSubmit() }, [showPast, showFuture, orderOfSort])
+  useEffect(() => { handleSubmit() }, [showPast, showFuture, increasing])
 
 
 
@@ -22,10 +22,10 @@ const DashboardSettings = ({ setFilters }) => {
 
     console.log("Past:" + showPast)
     console.log("Fut:" + showFuture)
-    console.log("INv:" + orderOfSort)
+    console.log("INv:" + increasing)
     if (!showPast) filters.push("filter_past");
     if (!showFuture) filters.push("filter_future");
-    if (!orderOfSort) filters.push("invert");
+    if (!increasing) filters.push("invert");
     filters.push(sortByRef.current.value);
 
 
@@ -61,7 +61,7 @@ const DashboardSettings = ({ setFilters }) => {
             <Form.Group controlId="sorting" className="mt-1">
               <Form.Text>sortieren nach</Form.Text>
               <Form.Select aria-label="Sortierung" ref={sortByRef} onChange={(e) => { handleSubmit(); }}>
-                <option value={"sort_by_entry_date"}>Eintragsdatum</option>
+                {/*<option value={"sort_by_entry_date"}>Eintragsdatum</option>*/}
                 <option value={"sort_by_date"}>Datum</option>
                 <option value={"sort_by_required_people"}>
                   Benötigte Personen
@@ -74,7 +74,7 @@ const DashboardSettings = ({ setFilters }) => {
                 className="my-1"
                 id="order_of_sort"
                 label="aufsteigend sortieren"
-                onChange={(e) => { setOrderOfSort(e.target.checked); }}
+                onChange={(e) => { setIncreasing(e.target.checked); }}
               />
             </Form.Group>
             {/*<Button
