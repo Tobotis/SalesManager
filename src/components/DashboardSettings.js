@@ -18,8 +18,7 @@ const DashboardSettings = () => {
   return (
     <>
       <Accordion>
-        <Accordion.Header>
-          filter</Accordion.Header>
+        <Accordion.Header>filter</Accordion.Header>
         <Accordion.Body>
           <Form>
             <Form.Group controlId="filter">
@@ -37,7 +36,7 @@ const DashboardSettings = () => {
                 ref={showFutureRef}
               />
             </Form.Group>
-            <Form.Group controlId="sorting">
+            <Form.Group controlId="sorting" className="mt-1">
               <Form.Text>sortieren nach</Form.Text>
               <Form.Select aria-label="Sortierung" ref={sortByRef}>
                 <option value={SORT_BY_ENTRY_DATE}>Eintragsdatum</option>
@@ -49,6 +48,7 @@ const DashboardSettings = () => {
               </Form.Select>
               <Form.Check
                 type="switch"
+                className="my-1"
                 id="order_of_sort"
                 label="aufsteigend sortieren"
                 ref={orderOfSortRef}
@@ -56,7 +56,7 @@ const DashboardSettings = () => {
             </Form.Group>
             <Button
               disabled={loading}
-              className="w-100"
+              className="w-100 mt-2"
               variant="primary"
               type="submit"
             >
