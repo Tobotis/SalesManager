@@ -103,8 +103,13 @@ const HandleRevenue = ({ show, onHide, sale }) => {
                   setRevenue(stripRevenue(revenueRef.current.value));
                 }}
                 required
+                maxLength={6}
               />
-              <InputGroup.Text>{formatRevenue(revenue)}</InputGroup.Text>
+              <InputGroup.Text>
+                {formatRevenue(revenue) == "NaN"
+                  ? "❌"
+                  : formatRevenue(revenue)}
+              </InputGroup.Text>
               <InputGroup.Text>€</InputGroup.Text>
             </InputGroup>
           </Form.Group>
