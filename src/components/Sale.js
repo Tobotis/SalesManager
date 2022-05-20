@@ -9,9 +9,17 @@ const Sale = ({ sale }) => {
   const [showEnterSale, setShowEnterSale] = useState(false);
   const [showEditSale, setShowEditSale] = useState(false);
   const [showRevenueEditSale, setShowRevenueEditSale] = useState(false);
+
+
+  let today_microseconds = new Date().getTime()
+  let sale_microseconds = (sale.date.seconds - (24 * 3600)) * 1000
+  let in_the_past = new Date().getTime() > (sale.date.seconds - (24 * 3600)) * 1000
+
+
+
   return (
     <>
-      <Card>
+      <Card className="mb-2" border={((in_the_past) ? "info" : "secondary")}>
         <Card.Body>
           <Card.Title>
             {sale.product} (
@@ -30,7 +38,7 @@ const Sale = ({ sale }) => {
             {sale.people.length}/{sale.capacity} <br />
             {sale.people.map(
               (person, index) =>
-                person + (index != sale.people.length - 1 ? ", " : "")
+                person.replace(" ", "") + (index === sale.people.length - 2 ? " & " : (index != sale.people.length - 1 ? ", " : " "))
             )}
           </Card.Text>
         </Card.Body>
