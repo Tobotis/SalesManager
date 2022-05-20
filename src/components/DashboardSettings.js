@@ -1,19 +1,39 @@
-import React, { useRef, useState } from "react";
-import { Accordion, Form, Button } from "react-bootstrap";
+import React, { useRef, useState, useEffect } from "react";
+import { Accordion, Form, Button, FormCheck } from "react-bootstrap";
 
-export const SORT_BY_ENTRY_DATE = "sort_by_entry_date";
-export const SORT_BY_DATE = "sort_by_date";
-export const SORT_BY_REMAINING_PEOPLE = "sort_by_remaining_people";
-export const SORT_BY_REVENUE = "sort_by_revenue";
-export const NO_SELECTION = "no_selection";
 
-const DashboardSettings = () => {
+const DashboardSettings = ({ setFilters }) => {
   const [loading, setLoading] = useState(false);
 
-  const showPastRef = useRef();
-  const showFutureRef = useRef();
+  const [showPast, setShowPast] = useState(true)
+  const [showFuture, setShowFuture] = useState(true)
+  const [orderOfSort, setOrderOfSort] = useState(true)
+
+  useEffect(() => { handleSubmit() }, [showPast, showFuture, orderOfSort])
+
+
+
+
   const sortByRef = useRef();
-  const orderOfSortRef = useRef();
+
+
+  const handleSubmit = () => {
+    let filters = [];
+
+    console.log("Past:" + showPast)
+    console.log("Fut:" + showFuture)
+    console.log("INv:" + orderOfSort)
+    if (!showPast) filters.push("filter_past");
+    if (!showFuture) filters.push("filter_future");
+    if (!orderOfSort) filters.push("invert");
+    filters.push(sortByRef.current.value);
+
+
+    console.log(filters)
+
+    setFilters(filters)
+
+  }
 
   return (
     <>
@@ -21,47 +41,50 @@ const DashboardSettings = () => {
         <Accordion.Header>
           filter</Accordion.Header>
         <Accordion.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="filter">
               <Form.Text>filtern</Form.Text>
-              <Form.Check
+              <FormCheck
+                defaultChecked={true}
                 type="switch"
                 id="show_past"
                 label="vergangene Einträge anzeigen"
-                ref={showPastRef}
+                onChange={(e) => { setShowPast(e.target.checked); }}
               />
-              <Form.Check
+              <FormCheck
+                defaultChecked={true}
                 type="switch"
                 id="show_future"
                 label="zukünftige Einträge anzeigen"
-                ref={showFutureRef}
+                onChange={(e) => { setShowFuture(e.target.checked); }}
               />
             </Form.Group>
             <Form.Group controlId="sorting">
               <Form.Text>sortieren nach</Form.Text>
-              <Form.Select aria-label="Sortierung" ref={sortByRef}>
-                <option value={SORT_BY_ENTRY_DATE}>Eintragsdatum</option>
-                <option value={SORT_BY_DATE}>Datum</option>
-                <option value={SORT_BY_REMAINING_PEOPLE}>
+              <Form.Select aria-label="Sortierung" ref={sortByRef} onChange={(e) => { handleSubmit(); }}>
+                <option value={"sort_by_entry_date"}>Eintragsdatum</option>
+                <option value={"sort_by_date"}>Datum</option>
+                <option value={"sort_by_required_people"}>
                   Benötigte Personen
                 </option>
-                <option value={SORT_BY_REVENUE}>Umsatz</option>
+                <option value={"sort_by_revenue"}>Umsatz</option>
               </Form.Select>
-              <Form.Check
+              <FormCheck
+                defaultChecked={true}
                 type="switch"
                 id="order_of_sort"
                 label="aufsteigend sortieren"
-                ref={orderOfSortRef}
+                onChange={(e) => { setOrderOfSort(e.target.checked); }}
               />
             </Form.Group>
-            <Button
+            {/*<Button
               disabled={loading}
               className="w-100"
               variant="primary"
               type="submit"
             >
               anwenden
-            </Button>
+  </Button>*/}
           </Form>
         </Accordion.Body>
       </Accordion>
