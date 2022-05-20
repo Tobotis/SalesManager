@@ -44,7 +44,8 @@ const Dashboard = () => {
     let copy = sales;
 
     if (appliedFilters.includes("sort_by_date")) {
-      copy.sort((a, b) => a.date - b.date)
+
+      copy.sort((a, b) => a.date.seconds - b.date.seconds)
     }
 
     if (appliedFilters.includes("sort_by_required_people")) {
