@@ -7,6 +7,7 @@ import Layout from "./Layout";
 import Sale from "./Sale";
 import AddSale from "./AddSale";
 import { isValidSale } from "../firestore";
+import DashboardSettings from "./DashboardSettings";
 
 const Dashboard = () => {
   const [sales, setSales] = useState([]);
@@ -21,7 +22,8 @@ const Dashboard = () => {
   );
   return (
     <Layout>
-      <div className="text-center mt-5">
+      <DashboardSettings />
+      <div className="text-center">
         {isAdmin() ? (
           <Button onClick={() => setShowAddSale(true)} className="m-5">
             verkaufstermin hinzufügen

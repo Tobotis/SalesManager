@@ -1,10 +1,12 @@
+import { Container } from "react-bootstrap";
 import NavigationBar from "./NavigationBar";
 
 const Layout = ({ children }) => {
   return (
     <div>
       <NavigationBar />
-      {children}
+      <Container style={{ marginTop: 60 + "px" }}>{children}</Container>
+
     </div>
   );
 };
