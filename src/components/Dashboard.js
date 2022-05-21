@@ -72,7 +72,6 @@ const Dashboard = () => {
     }
 
     if (!appliedFilters.includes("invert")) {
-      console.log("INVERT")
       copy.reverse();
     }
 
@@ -88,7 +87,7 @@ const Dashboard = () => {
       copy = copy.filter((a) => a.capacity = !a.people.length)
     }
     console.log("--------------")
-    copy.map((i) => { console.log(i.revenue) })
+    copy.map((i) => { console.log(i.date.seconds) })
     console.log("--------------")
     setProcessedSales(copy);
 

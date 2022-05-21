@@ -20,9 +20,7 @@ const DashboardSettings = ({ setFilters }) => {
   const handleSubmit = () => {
     let filters = [];
 
-    console.log("Past:" + showPast)
-    console.log("Fut:" + showFuture)
-    console.log("INv:" + increasing)
+
     if (!showPast) filters.push("filter_past");
     if (!showFuture) filters.push("filter_future");
     if (!increasing) filters.push("invert");
@@ -60,7 +58,7 @@ const DashboardSettings = ({ setFilters }) => {
             </Form.Group>
             <Form.Group controlId="sorting" className="mt-1">
               <Form.Text>sortieren nach</Form.Text>
-              <Form.Select aria-label="Sortierung" ref={sortByRef} onChange={(e) => { handleSubmit(); }}>
+              <Form.Select aria-label="Sortierung" ref={sortByRef} onChange={(e) => { console.log("He"); handleSubmit(); }}>
                 {/*<option value={"sort_by_entry_date"}>Eintragsdatum</option>*/}
                 <option value={"sort_by_date"}>Datum</option>
                 <option value={"sort_by_required_people"}>
