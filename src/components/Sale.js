@@ -5,11 +5,7 @@ import { deleteSale } from "../firestore";
 import EditSale from "./EditSale";
 import HandleRevenue from "./HandleRevenue";
 import { useAuth } from "../contexts/AuthContext";
-import { inThePast } from "../utils/dateFunctions";
-
-
-
-
+import { inPast } from "../utils/dateFunctions";
 
 const Sale = ({ sale }) => {
   const [showEnterSale, setShowEnterSale] = useState(false);
@@ -17,11 +13,10 @@ const Sale = ({ sale }) => {
   const [showRevenueEditSale, setShowRevenueEditSale] = useState(false);
   const { isAdmin } = useAuth();
 
-
   return (
     <>
       {/*Change border color regarding ti relationship to present*/}
-      <Card className="mb-2" border={inThePast(sale) ? "secondary" : "info"}>
+      <Card className="mb-2" border={inPast(sale) ? "secondary" : "info"}>
         <Card.Body>
           <Card.Title>
             {sale.product} (
@@ -44,8 +39,8 @@ const Sale = ({ sale }) => {
                 (index === sale.people.length - 2
                   ? " & "
                   : index != sale.people.length - 1
-                    ? ", "
-                    : " ")
+                  ? ", "
+                  : " ")
             )}
           </Card.Text>
         </Card.Body>
@@ -68,9 +63,9 @@ const Sale = ({ sale }) => {
                 {(sale?.revenue ? "+" : "") +
                   (sale?.revenue
                     ? Intl.NumberFormat("de-DE", {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    }).format(sale.revenue) + " €"
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(sale.revenue) + " €"
                     : "umsatz")}{" "}
               </a>
             </Button>

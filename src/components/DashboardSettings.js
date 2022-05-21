@@ -1,67 +1,75 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Accordion, Form, Button, FormCheck } from "react-bootstrap";
+import { Accordion, Form, FormCheck } from "react-bootstrap";
 
-
+// component for filter and sorting settings
 const DashboardSettings = ({ setFilters }) => {
-  const [loading, setLoading] = useState(false);
-
-  const [showPast, setShowPast] = useState(true)
-  const [showFuture, setShowFuture] = useState(true)
-  const [increasing, setIncreasing] = useState(true)
-
-  useEffect(() => { handleSubmit() }, [showPast, showFuture, increasing])
-
-
-
-
+  // show sales, which are older than today
+  const [showPast, setShowPast] = useState(false);
+  // show sales, which are in more than a week
+  const [showFuture, setShowFuture] = useState(false);
+  // ref for sorting option
   const sortByRef = useRef();
+  // set the sorting to be ascending or descending
+  const [ascending, setAscending] = useState(false);
 
+  // handle the change in a filter setting
+  useEffect(() => {
+    handleChange();
+  }, [showPast, showFuture, ascending]);
 
-  const handleSubmit = () => {
+  // function for handling the change in a filter setting
+  const handleChange = () => {
+    // list of all applied filters/sorting
     let filters = [];
 
-    console.log("Past:" + showPast)
-    console.log("Fut:" + showFuture)
-    console.log("INv:" + increasing)
-    if (!showPast) filters.push("filter_past");
-    if (!showFuture) filters.push("filter_future");
-    if (!increasing) filters.push("invert");
+    console.log("Past:" + showPast);
+    console.log("Fut:" + showFuture);
+    console.log("Asc:" + ascending);
+    // Add filter/sorting keywords to list
+    if (showPast) filters.push("show_past");
+    if (showFuture) filters.push("show_future");
+    if (ascending) filters.push("ascending");
     filters.push(sortByRef.current.value);
 
-
-    console.log(filters)
-
-    setFilters(filters)
-
-  }
+    console.log("handled Change:", filters);
+    // use hook to update filters
+    setFilters(filters);
+  };
 
   return (
     <>
       <Accordion>
         <Accordion.Header>filter</Accordion.Header>
         <Accordion.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleChange}>
             <Form.Group controlId="filter">
               <Form.Text>filtern</Form.Text>
               <FormCheck
-                defaultChecked={true}
+                defaultChecked={showPast}
                 type="switch"
                 id="show_past"
                 label="vergangene Einträge anzeigen"
-                onChange={(e) => { setShowPast(e.target.checked); }}
+                onChange={(e) => {
+                  setShowPast(e.target.checked);
+                }}
               />
               <FormCheck
-                defaultChecked={true}
+                defaultChecked={showFuture}
                 type="switch"
                 id="show_future"
                 label="zukünftige Einträge anzeigen"
-                onChange={(e) => { setShowFuture(e.target.checked); }}
+                onChange={(e) => {
+                  setShowFuture(e.target.checked);
+                }}
               />
             </Form.Group>
             <Form.Group controlId="sorting" className="mt-1">
               <Form.Text>sortieren nach</Form.Text>
-              <Form.Select aria-label="Sortierung" ref={sortByRef} onChange={(e) => { handleSubmit(); }}>
-                {/*<option value={"sort_by_entry_date"}>Eintragsdatum</option>*/}
+              <Form.Select
+                aria-label="Sortierung"
+                ref={sortByRef}
+                onChange={handleChange}
+              >
                 <option value={"sort_by_date"}>Datum</option>
                 <option value={"sort_by_required_people"}>
                   Benötigte Personen
@@ -69,22 +77,16 @@ const DashboardSettings = ({ setFilters }) => {
                 <option value={"sort_by_revenue"}>Umsatz</option>
               </Form.Select>
               <FormCheck
-                defaultChecked={true}
+                defaultChecked={ascending}
                 type="switch"
                 className="my-1"
                 id="order_of_sort"
                 label="aufsteigend sortieren"
-                onChange={(e) => { setIncreasing(e.target.checked); }}
+                onChange={(e) => {
+                  setAscending(e.target.checked);
+                }}
               />
             </Form.Group>
-            {/*<Button
-              disabled={loading}
-              className="w-100 mt-2"
-              variant="primary"
-              type="submit"
-            >
-              anwenden
-  </Button>*/}
           </Form>
         </Accordion.Body>
       </Accordion>
