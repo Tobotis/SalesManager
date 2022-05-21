@@ -7,6 +7,8 @@ const DashboardSettings = ({ setFilters }) => {
   const [showPast, setShowPast] = useState(false);
   // show sales, which are in more than a week
   const [showFuture, setShowFuture] = useState(true);
+  // show sales, which are full
+  const [showFull, setShowFull] = useState(true);
   // ref for sorting option
   const sortByRef = useRef();
   // set the sorting to be ascending or descending
@@ -15,7 +17,7 @@ const DashboardSettings = ({ setFilters }) => {
   // handle the change in a filter setting
   useEffect(() => {
     handleChange();
-  }, [showPast, showFuture, ascending]);
+  }, [showPast, showFuture, showFull, ascending]);
 
   // function for handling the change in a filter setting
   const handleChange = () => {
@@ -24,6 +26,7 @@ const DashboardSettings = ({ setFilters }) => {
     // Add filter/sorting keywords to list
     if (showPast) filters.push("show_past");
     if (showFuture) filters.push("show_future");
+    if (showFull) filters.push("show_full");
     if (ascending) filters.push("ascending");
     filters.push(sortByRef.current.value);
 
@@ -56,6 +59,15 @@ const DashboardSettings = ({ setFilters }) => {
                 label="zukünftige Einträge anzeigen"
                 onChange={(e) => {
                   setShowFuture(e.target.checked);
+                }}
+              />
+              <FormCheck
+                defaultChecked={showFull}
+                type="switch"
+                id="show_full"
+                label="volle Einträge anzeigen"
+                onChange={(e) => {
+                  setShowFull(e.target.checked);
                 }}
               />
             </Form.Group>

@@ -55,8 +55,8 @@ const Dashboard = () => {
       copy = copy.filter((a) => !inFuture(a));
     }
 
-    if (appliedFilters.includes("show_full")) {
-      copy = copy.filter((a) => (a.capacity = !a.people.length));
+    if (!appliedFilters.includes("show_full")) {
+      copy = copy.filter((a) => a.capacity > a.people.length);
     }
 
     // ==== APPLY SORTING ====
