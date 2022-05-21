@@ -6,7 +6,7 @@ const DashboardSettings = ({ setFilters }) => {
   // show sales, which are older than today
   const [showPast, setShowPast] = useState(false);
   // show sales, which are in more than a week
-  const [showFuture, setShowFuture] = useState(false);
+  const [showFuture, setShowFuture] = useState(true);
   // ref for sorting option
   const sortByRef = useRef();
   // set the sorting to be ascending or descending

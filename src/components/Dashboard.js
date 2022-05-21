@@ -17,7 +17,7 @@ const Dashboard = () => {
   // list of sales after applied filters/sorting
   const [processedSales, setProcessedSales] = useState([]);
   // list of applied filter keywords
-  const [appliedFilters, setAppliedFilters] = useState(["sort_by_date"]);
+  const [appliedFilters, setAppliedFilters] = useState(["sort_by_date","show_future"]);
   // state for showing the add sale section
   const [showAddSale, setShowAddSale] = useState(false);
   // function for checking admin status
