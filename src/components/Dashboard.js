@@ -17,7 +17,10 @@ const Dashboard = () => {
   // list of sales after applied filters/sorting
   const [processedSales, setProcessedSales] = useState([]);
   // list of applied filter keywords
-  const [appliedFilters, setAppliedFilters] = useState(["sort_by_date","show_future"]);
+  const [appliedFilters, setAppliedFilters] = useState([
+    "sort_by_date",
+    "show_future",
+  ]);
   // state for showing the add sale section
   const [showAddSale, setShowAddSale] = useState(false);
   // function for checking admin status
@@ -51,10 +54,9 @@ const Dashboard = () => {
     if (!appliedFilters.includes("show_future")) {
       copy = copy.filter((a) => !inFuture(a));
     }
-   
 
     if (appliedFilters.includes("show_full")) {
-      copy = copy.filter((a) => a.capacity = !a.people.length)
+      copy = copy.filter((a) => (a.capacity = !a.people.length));
     }
 
     // ==== APPLY SORTING ====
@@ -70,8 +72,8 @@ const Dashboard = () => {
       copy.sort((a, b) => {
         if (!isValid(a.capacity - a.people.length)) return -1;
         if (!isValid(b.capacity - b.people.length)) return 1;
-        return (a.capacity - a.people.length) - (b.capacity - b.people.length)
-      })
+        return a.capacity - a.people.length - (b.capacity - b.people.length);
+      });
     }
     // check if revenue sorting is active
     if (appliedFilters.includes("sort_by_revenue")) {
@@ -92,11 +94,20 @@ const Dashboard = () => {
     <Layout>
       <DashboardSettings setFilters={setAppliedFilters} />
       <div className="text-center">
-        {isAdmin() ? (
-          <Button onClick={() => setShowAddSale(true)} className="m-5">
-            verkaufstermin hinzufügen
-          </Button>
-        ) : null}
+        {
+          <div className="m-5">
+            <Button
+              onClick={() => setShowAddSale(true)}
+              className=""
+              disabled={!isAdmin()}
+            >
+              verkaufstermin hinzufügen
+            </Button>
+            {!isAdmin() ? (
+              <div className="text-muted">adminrechte benötigt</div>
+            ) : null}
+          </div>
+        }
         <div>
           {processedSales.map((sale) => {
             return isValidSale({ sale }) ? (
