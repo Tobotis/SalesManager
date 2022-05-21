@@ -9,6 +9,7 @@ import AddSale from "./AddSale";
 import { isValidSale } from "../firestore";
 import DashboardSettings from "./DashboardSettings";
 import { inPast, inFuture } from "../utils/dateFunctions";
+import { isValid } from "../utils/numberFunctions";
 
 const Dashboard = () => {
   // list of all sales in the database
@@ -50,9 +51,10 @@ const Dashboard = () => {
     if (!appliedFilters.includes("show_future")) {
       copy = copy.filter((a) => !inFuture(a));
     }
+   
 
-    if (appliedFilters.includes("show_free")) {
-      copy = copy.filter((a) => (a.capacity = !a.people.length));
+    if (appliedFilters.includes("show_full")) {
+      copy = copy.filter((a) => a.capacity = !a.people.length)
     }
 
     // ==== APPLY SORTING ====
@@ -63,27 +65,28 @@ const Dashboard = () => {
         return new Date(a.date.toDate()) - new Date(b.date.toDate());
       });
     }
+    // check if required people sorting is active
     if (appliedFilters.includes("sort_by_required_people")) {
-      copy.sort(
-        (a, b) => a.capacity - a.people.length - (b.capacity - b.people.length)
-      );
+      copy.sort((a, b) => {
+        if (!isValid(a.capacity - a.people.length)) return -1;
+        if (!isValid(b.capacity - b.people.length)) return 1;
+        return (a.capacity - a.people.length) - (b.capacity - b.people.length)
+      })
     }
-
+    // check if revenue sorting is active
     if (appliedFilters.includes("sort_by_revenue")) {
       copy.sort((a, b) => {
-        if (typeof a.revenue != "number") return -1;
-        if (typeof b.revenue != "number") return 1;
+        if (!isValid(a.revenue)) return -1;
+        if (!isValid(b.revenue)) return 1;
         return a.revenue - b.revenue;
       });
     }
-
+    // apply ascending sorting
     if (!appliedFilters.includes("ascending")) {
       copy = copy.map((item) => item).reverse();
     }
-
     setProcessedSales(copy);
   };
-  console.log("---");
 
   return (
     <Layout>
@@ -96,8 +99,6 @@ const Dashboard = () => {
         ) : null}
         <div>
           {processedSales.map((sale) => {
-            console.log(sale);
-            console.log(isValidSale(sale));
             return isValidSale({ sale }) ? (
               <Sale sale={sale} key={sale.id} />
             ) : null;

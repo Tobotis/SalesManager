@@ -17,7 +17,7 @@ export const inFuture = (sale) => {
   // Gets time of sale (in µs since epoch)
   // Is moved by one day to simplify display
   let saleMicroseconds = (sale.date.seconds - 7 * 24 * 3600) * 1000;
-  // Calculates if sale is in the past
+  // Calculates if sale is in the future
   let inFuture = todayMicroseconds < saleMicroseconds;
 
   return inFuture;

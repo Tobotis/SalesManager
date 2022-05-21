@@ -21,10 +21,6 @@ const DashboardSettings = ({ setFilters }) => {
   const handleChange = () => {
     // list of all applied filters/sorting
     let filters = [];
-
-    console.log("Past:" + showPast);
-    console.log("Fut:" + showFuture);
-    console.log("Asc:" + ascending);
     // Add filter/sorting keywords to list
     if (showPast) filters.push("show_past");
     if (showFuture) filters.push("show_future");
