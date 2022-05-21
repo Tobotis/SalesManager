@@ -9,6 +9,7 @@ import AddSale from "./AddSale";
 import { isValidSale } from "../firestore";
 import DashboardSettings from "./DashboardSettings";
 import { inThePast, inTheFuture } from "../utils/dateFunctions";
+import { isValid } from "../utils/numberFunctions";
 import { type } from "@testing-library/user-event/dist/type";
 
 const Dashboard = () => {
@@ -49,7 +50,12 @@ const Dashboard = () => {
     }
 
     if (appliedFilters.includes("sort_by_required_people")) {
-      copy.sort((a, b) => (a.capacity - a.people.length) - (b.capacity - b.people.length))
+
+      copy.sort((a, b) => {
+        if (!isValid(a.capacity - a.people.length)) return -1;
+        if (!isValid(b.capacity - b.people.length)) return 1;
+        return (a.capacity - a.people.length) - (b.capacity - b.people.length)
+      })
     }
 
     if (appliedFilters.includes("sort_by_entry_date")) {
