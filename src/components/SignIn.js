@@ -7,7 +7,8 @@ const SignIn = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const pwRef = useRef();
-  const { signin, signinPW } = useAuth();
+  const adminPwRef = useRef();
+  const { signin, signinPW, signinADMINPW } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,6 +18,18 @@ const SignIn = () => {
       setError("");
       setLoading(true);
       await signinPW(pwRef.current.value);
+      navigate("/");
+    } catch {
+      setError("irgendetwas ist schief gelaufen");
+    }
+    setLoading(false);
+  };
+  const handleADMINPWLogin = async (e) => {
+    e.preventDefault();
+    try {
+      setError("");
+      setLoading(true);
+      await signinADMINPW(adminPwRef.current.value);
       navigate("/");
     } catch {
       setError("irgendetwas ist schief gelaufen");
@@ -39,11 +52,22 @@ const SignIn = () => {
     <>
       <Card>
         <Card.Body>
+          <h2>nutzer</h2>
           {error && <Alert variant="danger">{error}</Alert>}
-          <Form className="mb-10" onSubmit={handlePWLogin}>
+          <Form className="mb-5" onSubmit={handlePWLogin}>
             <Form.Group className="mb-3" id="pw">
-              <Form.Label>passwort</Form.Label>
+              <Form.Label>nutzer passwort</Form.Label>
               <Form.Control type="password" ref={pwRef} required />
+            </Form.Group>
+            <Button disabled={loading} className="w-100" type="submit">
+              weiter
+            </Button>
+          </Form>
+          <h2>admin</h2>
+          <Form className="mb-10" onSubmit={handleADMINPWLogin}>
+            <Form.Group className="mb-3" id="pw-admin">
+              <Form.Label>admin passwort</Form.Label>
+              <Form.Control type="password" ref={adminPwRef} required />
             </Form.Group>
             <Button disabled={loading} className="w-100" type="submit">
               weiter

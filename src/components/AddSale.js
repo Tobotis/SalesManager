@@ -3,15 +3,18 @@ import { useState, useRef } from "react";
 import { addSale } from "../firestore";
 
 const AddSale = ({ show, onHide }) => {
+  // loading and error hooks (used when submitting)
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // different refs for different inputs
   const dateRef = useRef();
   const slotRef = useRef();
   const productRef = useRef();
   const notesRef = useRef();
   const capacityRef = useRef();
 
+  // submit handler
   const handleAddSale = async (e) => {
     e.preventDefault();
     try {
